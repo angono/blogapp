@@ -1,0 +1,27 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="col-md-8 mx-auto">
+    <div class="card">
+        {% if post_ids.image %}
+            <div class="card-img">
+                <img src="{{post_ids.image.url}}" class="card-img-top" width="100%" height="400">
+            </div>
+        {% endif %}
+        <div class="card-body">
+            <h3>{{post_ids.title|capfirst}}</h3>
+            <p class="text-primary">
+                {{post_ids.date|date}} | {{post_ids.category|capfirst}}
+            </p>
+            <p>{{post_ids.content|safe|linebreaks|capfirst}}</p>
+        </div>
+        <div class="card-footer border-0">
+            <a href="{% url 'post-list' %}">Back to home</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

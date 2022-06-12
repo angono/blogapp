@@ -1,0 +1,86 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-8">
+        {% for obj in post_data %}
+            <div class="card">
+                {% if obj.image %}
+                    <div class="card-img">
+                        <img src="{{obj.image.url}}" class="card-img-top" width="100%" height="200">
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h4>{{obj.title|capfirst}}</h4>
+                    <p class="text-primary">
+                        {{obj.date|date}} | {{obj.category|capfirst}}
+                    </p>
+                    <p>{{obj.content|safe|linebreaks|capfirst|truncatechars:300}}</p>
+                </div>
+                <div class="card-footer border-0">
+                    <div class="btn-group">
+                        <a href="{{obj.get_absolute_url}}" type="submit" class="btn bg-btn btn-block">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4>Ooh! Nothing found!</h4>
+                </div>
+            </div>
+        {% endfor %}
+
+        <!-- begin pagination -->
+        <div class="container mt-2">
+            {% if post_data.has_other_pages %}
+                <!--Previous page-->
+                {% if post_data.has_previous %}
+                    <a class="btn btn-outline-primary rounded mb-4 btn-sm" href="?page=1">First</a>
+                    <a class="btn btn-outline-primary rounded mb-4 btn-sm" href="?page={{post_data.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                <!--Paginate number-->
+                {% for num in post_data.paginator.page_range %}
+                    {% if post_data.number == num %}
+                        <a class="btn btn-primary rounded mb-4 btn-sm" href="?page={{num}}">{{ num }}</a>
+                    {% elif num > post_data.number|add:'-3' and num < post_data.number|add:'3' %}
+                        <a class="btn btn-outline-primary rounded mb-4 btn-sm" href="?page={{num}}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                <!--Next page-->
+                {% if post_data.has_next %}
+                    <a class="btn btn-outline-primary rounded mb-4 btn-sm" href="?page={{post_data.next_page_number}}">Next</a>
+                    <a class="btn btn-outline-primary rounded mb-4 btn-sm" href="?page={{post_data.paginator.num_pages}}">Last</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <!-- end pagination -->
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                {% for obj in catg_data %}
+                    <li class="list-group-item">
+                        <a href="{{obj.get_absolute_url}}">
+                            {{obj.title|capfirst}} ({{obj.catgs.count}})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}
+
+

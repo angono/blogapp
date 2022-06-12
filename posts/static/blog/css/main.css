@@ -1,0 +1,39 @@
+html,body {
+	height: 100%;
+	font-family: 'Poppins', sans-serif;
+	font-weight: 400;
+	font-size: 1.1em;
+}
+
+.bg-site, .bg-btn{
+    background-color: #003168!important;
+    color: white!important;
+}
+
+a:hover{
+    color: grey!important;
+}
+
+a {
+	text-decoration: none!important;
+}
+
+.logo {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+main {
+	margin-bottom: 60px;
+}
+
+.card {
+	border-radius: 0.5rem;
+	overflow: hidden;
+	background: transparent;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+}
+
+
